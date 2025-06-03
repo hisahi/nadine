@@ -2,7 +2,7 @@
 *                                                                              *
 *   NADINE -- PORTABLE, SINGLE-HEADER, ENDIAN CONVERSION LIBRARY FOR C         *
 *   DEVELOPED BY SAMPO HIPPELAINEN (HISAHI)                                    *
-*   VERSION   2024-06-21.2                                                     *
+*   VERSION   2025-06-03                                                       *
 *                                                                              *
 *   THIS LIBRARY IS DUAL-LICENSED UNDER THE UNLICENSE PUBLIC-DOMAIN            *
 *   EQUIVALENT LICENSE AND THE MIT LICENSE.                                    *
@@ -117,7 +117,7 @@ Example of a full name under this scheme: `nadine_convert_int'
 
 MIT License
 
-Copyright (c) 2024 Sampo Hippelainen (hisahi)
+Copyright (c) 2024-2025 Sampo Hippelainen (hisahi)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -623,7 +623,7 @@ extern void nadine_i_xform(void *p, size_t n, unsigned xf);
 #if NADINE_I_C99
 /* on C99 with compound literals, optimize big/little-endian cases */
 /* int value 1 will only have the lowest byte set in IEEE 754 */
-#define NADINE_I_UNION_PUN_INT(N)                                              \
+#define NADINE_I_UNION_PUN_INT(T)                                              \
         (((union { T v; unsigned char b[sizeof(T)]; }){ (T)1 }).b)
 #define NADINE_I_NATIVE_INT(T, N) (                                            \
         (NADINE_I_UNION_PUN_INT(T)[0])             ? NADINE_ENDIAN_LITTLE :    \
@@ -662,7 +662,7 @@ extern void nadine_i_xform(void *p, size_t n, unsigned xf);
 #if NADINE_I_C99
 /* on C99 with compound literals, optimize big/little-endian cases */
 /* float value 2.0 will only have the highest byte set in IEEE 754 */
-#define NADINE_I_UNION_PUN_FLOAT(N)                                            \
+#define NADINE_I_UNION_PUN_FLOAT(T)                                            \
         (((union { T v; unsigned char b[sizeof(T)]; }){ (T)2.0 }).b)
 #define NADINE_I_NATIVE_FLOAT(T, N) (                                          \
         (NADINE_I_UNION_PUN_FLOAT(T)[sizeof(T) - 1]) ? NADINE_ENDIAN_LITTLE :  \
